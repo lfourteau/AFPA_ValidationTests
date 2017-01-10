@@ -1,0 +1,131 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Books
+ *
+ * @ORM\Table(name="books", indexes={@ORM\Index(name="publication_id", columns={"documents_id"}), @ORM\Index(name="publication_id_2", columns={"documents_id"})})
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\BooksRepository")
+ */
+class Books
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="kind", type="string", length=150, nullable=false)
+     */
+    private $kind;
+    
+    /**
+     * @var text
+     *
+     * @ORM\Column(name="description", type="text", length=1500, nullable=false)
+     */
+    private $description;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \AppBundle\Entity\Documents
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Documents")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="documents_id", referencedColumnName="id")
+     * })
+     */
+    private $documents;
+
+
+
+    /**
+     * Set kind
+     *
+     * @param string $kind
+     *
+     * @return Books
+     */
+    public function setKind($kind)
+    {
+        $this->kind = $kind;
+
+        return $this;
+    }
+
+    /**
+     * Get kind
+     *
+     * @return string
+     */
+    public function getKind()
+    {
+        return $this->kind;
+    }
+    
+    /**
+     * Set description
+     *
+     * @param text $description
+     *
+     * @return Books
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $description;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+     /**
+     * Set document
+     *
+     * @param \AppBundle\Entity\Documents $document
+     *
+     * @return Books
+     */
+    public function setDocument(\AppBundle\Entity\Documents $document = null)
+    {
+        $this->document = $document;
+
+        return $this;
+    }
+
+    /**
+     * Get document
+     *
+     * @return \AppBundle\Entity\Documents
+     */
+    public function getDocument()
+    {
+        return $this->document;
+    }
+}

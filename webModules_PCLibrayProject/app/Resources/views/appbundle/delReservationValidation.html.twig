@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% include 'appbundle/globalNavBar.html.twig' %}
+{% include 'appbundle/userNavBar.html.twig' %}
+    
+<div class ="PleyberChristPagesContainer">    
+Votre réservation a bien été annulée
+<a href ="/user?userId={{app.user.id}}"><button>Retour à mes réservations</button></a>
+<a href ="{{path('newDocuments')}}"><button>Revenir aux nouveautés</button></a>
+</div>
+{% endblock %}

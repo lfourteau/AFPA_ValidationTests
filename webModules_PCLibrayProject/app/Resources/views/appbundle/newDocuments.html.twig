@@ -1,0 +1,179 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    
+ {% include 'appbundle/globalNavBar.html.twig' %}
+ {% include 'appbundle/userNavBar.html.twig' %}
+
+<div class ="PleyberChristPagesContainer">
+    <p id ="newDocumentsTopPage"> Liste des nouveautés </p>
+    <span>        
+        <select id ="arrivingSince">
+            <option value ="1" {% if durationValue == 1 %}selected{% endif %}> Depuis hier</option>
+            <option value ="15" {% if durationValue == 15 %}selected{% endif %}> Dans les 15 derniers jours</option>
+            <option value ="45" {% if durationValue == 30 %}selected{% endif %}> Dans les 30 derniers jours</option>
+            <option value ="45" {% if durationValue == 45 %}selected{% endif %}> Dans les 45 jours </option>
+        </select>
+    </span>
+    <span>       
+        <select id ="documentType">
+            <option value ="" {% if typeId == false %}selected{% endif %}> Selectionnez une Catégorie </option>
+            {% for documentTypeList in documentTypesList %}
+            <option value = "{{documentTypeList.id}}" {% if documentTypeList.id == typeId %} selected {% endif %}>{{documentTypeList.code }}</option>
+            {% endfor %}
+        </select>
+    </span>
+    
+    {% for newBook in newBooks %}
+        <p class ="newDocumentTitle"> {{newBook.document.title }} </p>
+        <div class ="newDocumentsPageContainer">    
+            <div class ="newDocumentsPageItems">      
+                <img  class = "newDocumentsPageImage" src  = '{{asset('Images/BDDImages/' ~newBook.document.picture)}}'>
+            </div>              
+            <div class ="newDocumentsPageItems"> 
+                <div>
+                    <p class ="paragraphTitle">Description</p> {{ newBook.description }}
+                    <p> <span class ="paragraphTitle">Année de parution :</span> {{ newBook.document.year }}</p>
+                    <p> <span class ="paragraphTitle">Genre : </span> {{ newBook.kind }} </p>
+                    <p> <span class ="paragraphTitle">Auteur</span> {{ newBook.document.author }} </p>
+                    <p> <span class ="paragraphTitle">Disponibilité :</span>
+                        {% if newBook.document.booked == 'yes' %}                                                                   {#Vérifie dans la table document s'il y a une reservation dessus #}
+                            <span class ="reserveDocument"> Ouvrage reservé</span>
+                        {% else  %}
+                            <span class ="freeDocument">Cette ouvrage est disponible</span>
+                        {% endif %}                                
+                    </p>                    
+                    <p> <span class ="paragraphTitle">Catégorie :</span> {{newBook.document.documenttype.code}} <p>
+                    {% if not is_granted('ROLE_USER') %}
+                    <p> (Vous devez vous <a href ="/login"> connecter</a> pour pouvoir réserver cet ouvrage) </p>
+                    {% endif %}
+                    {% if is_granted('ROLE_USER') %} 
+                        <a href ="/user/reservation?documentId={{newBook.document.id}}&userId={{app.user.id }}"><button> Réserver cet ouvrage </button></a>                
+                    {% endif %}    
+                </div>
+            </div>            
+        </div>
+        <hr>
+    {% endfor %}
+    
+    {% for newCD in newCDs %}
+        <p class ="newDocumentTitle"> {{newCD.document.title }} </p>
+        <div class ="newDocumentsPageContainer">    
+            <div class ="newDocumentsPageItems">      
+                <img  class = "newDocumentsPageImage" src  = '{{asset('Images/BDDImages/' ~newCD.document.picture)}} '>
+            </div>              
+            <div class ="newDocumentsPageItems"> 
+                <div>
+                    <p> <span class ="paragraphTitle">Groupe/Artiste</span> {{ newCD.document.author }} </p>
+                    <p> <span class ="paragraphTitle">Durée</span> {{ newCD.duration }}</p>
+                    <p> <span class ="paragraphTitle">Année de parution :</span> {{ newCD.document.year }}</p>                
+                    <p> <span class ="paragraphTitle">Disponibilité :</span>
+                        {% if newCD.document.booked == 'yes' %}
+                            <span class ="reserveDocument"> Ouvrage reservé</span>
+                        {% else  %}
+                            <span class ="freeDocument">Cette ouvrage est disponible</span>
+                        {% endif %}                                
+                    </p>
+                    <p> <span class ="paragraphTitle">Catégorie :</span> {{newCD.document.documenttype.code}} <p>
+                    {% if not is_granted('ROLE_USER') %}
+                        <p> (Vous devez vous <a href ="/login"> connecter</a> pour pouvoir réserver cet ouvrage) </p>
+                    {% endif %}
+                    {% if is_granted('ROLE_USER') %} 
+                        <a href ="/user/reservation?documentId={{newCD.document.id}}&userId={{app.user.id }}"><button> Réserver cet ouvrage </button></a>                
+                    {% endif %} 
+                </div>
+            </div>            
+        </div>
+        <hr>
+    {% endfor %}
+
+    {% for newDVD in newDVDs %}
+        <p class ="newDocumentTitle"> {{newDVD.document.title }} </p>
+        <div class ="newDocumentsPageContainer">    
+            <div class ="newDocumentsPageItems">      
+                <img  class = "newDocumentsPageImage" src  = '{{asset('Images/BDDImages/' ~newDVD.document.picture)}} '>
+            </div>              
+            <div class ="newDocumentsPageItems"> 
+                <div>
+                    <p> <span class ="paragraphTitle">Réalisateur</span> {{ newDVD.document.author }} </p>
+                    <p> <span class ="paragraphTitle">Durée</span> {{ newDVD.duration }}</p>
+                    <p> <span class ="paragraphTitle">Année de parution :</span> {{ newDVD.document.year }}</p>                
+                    <p> <span class ="paragraphTitle">Disponibilité :</span>
+                        {% if newDVD.document.booked == 'yes' %}
+                            <span class ="reserveDocument"> Ouvrage reservé</span>
+                        {% else  %}
+                            <span class ="freeDocument">Cette ouvrage est disponible</span>
+                        {% endif %}                                
+                    </p>
+                    <p> <span class ="paragraphTitle">Catégorie :</span> {{newDVD.document.documenttype.code}} <p>
+                    {% if not is_granted('ROLE_USER') %}
+                        <p> (Vous devez vous <a href ="/login"> connecter</a> pour pouvoir réserver cet ouvrage) </p>
+                    {% endif %}
+                   
+                    {% if is_granted('ROLE_USER') %} 
+                        <a href ="/user/reservation?documentId={{newDVD.document.id}}&userId={{app.user.id }}"><button> Réserver cet ouvrage </button></a>                
+                    {% endif %}    
+                </div>
+            </div>            
+        </div>
+        <hr>
+    {% endfor %}
+
+    {% for newComic in newComics %}
+        <p class ="newDocumentTitle"> {{newComic.document.title }} </p>
+        <div class ="newDocumentsPageContainer">    
+            <div class ="newDocumentsPageItems">      
+                <img  class = "newDocumentsPageImage" src  = '{{asset('Images/BDDImages/' ~newComic.document.picture)}} '>
+            </div>              
+            <div class ="newDocumentsPageItems"> 
+                <div>
+                    <p class ="paragraphTitle">Description</p> {{ newComic.description }}
+                    <p> <span class ="paragraphTitle">Année de parution :</span> {{ newComic.document.year }}</p>
+                    <p> <span class ="paragraphTitle">Genre</span> {{ newComic.kind }} </p>                
+                    <p> <span class ="paragraphTitle">Auteur</span> {{ newComic.document.author }} </p>
+                    <p> <span class ="paragraphTitle">Disponibilité :</span>
+                        {% if newComic.document.booked == 'yes' %}
+                            <span class ="reserveDocument"> Ouvrage reservé</span>
+                        {% else  %}
+                            <span class ="freeDocument">Cette ouvrage est disponible</span>
+                        {% endif %}                                
+                    </p>
+                    <p> <span class ="paragraphTitle">Catégorie :</span> {{newComic.document.documenttype.code}} <p>
+                    {% if not is_granted('ROLE_USER') %}
+                    <p> (Vous devez vous <a href ="/login"> connecter</a> pour pouvoir réserver cet ouvrage) </p>
+                    {% endif %}
+                    {% if is_granted('ROLE_USER') %} 
+                        <a href ="/user/reservation?documentId={{newComic.document.id}}&userId={{app.user.id }}"><button> Réserver cet ouvrage </button></a>                
+                    {% endif %} 
+                </div>
+            </div>            
+        </div>
+        <hr>
+    {% endfor %}
+    
+   
+</div>
+
+
+{% block javascripts %}
+    <script>
+                
+        var arrivingSince = document.getElementById('arrivingSince');
+        var documentType = document.getElementById('documentType');
+        
+        arrivingSince.onchange = function()
+        {
+            location.href = "{{path('newDocuments')}}?duration=" + this.value;
+        };
+        
+        documentType.onchange = function()
+        {
+            var typeId = documentType.options[documentType.selectedIndex].value;
+            var arrivingSinceValue = arrivingSince.options[arrivingSince.selectedIndex].value;
+            location.href = "{{path('newDocuments')}}?typeId=" + typeId +"&duration=" + arrivingSinceValue;
+        };        
+                 
+   </script>
+{% endblock %}
+        
+{% endblock %}

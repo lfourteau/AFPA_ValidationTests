@@ -1,0 +1,45 @@
+{% block body %}
+ <div class ="PleyberChristPagesContainer">
+    <p id ="mediaTitle">Mediathèque de Pleyber-Christ</p>
+    {% if is_granted('ROLE_USER') or is_granted('ROLE_GESTIONNAIRE') or is_granted('ROLE_ADMIN') %}
+        <div class = "userNavBar" id ="isConnected">                
+                <a href ="{{path('home')}}" ><i class="fa fa-home fa-2x" title ="Home" aria-hidden="true"></i></a>               
+            <div>
+                <span class ="paragraphTitle">Bonjour {{app.user.username}}</span>
+                <select id ="userAccount">
+                    <option value = "0"> Mon compte </option>
+                    <option value = "1">Mes réservations</option></a>
+                    <option value = "2">Se déconnecter</option></a>
+                </select>
+            </div>
+        </div>
+    {% else %}
+         <div class = "userNavBar" id ="isNotConnected">
+            <a href  ="{{ path('fos_user_security_login') }}"> <button>Se connecter</button></a>
+            <a href  ="{{ path('fos_user_registration_register') }}"> <button>S'inscrire</button> </a>
+         </div>
+    {% endif %}   
+ </div>
+{% endblock %}
+{% block javascripts %}
+    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') or is_granted('ROLE_GESTIONNAIRE') %}
+        <script>
+            var userAccount = document.getElementById('userAccount');
+
+            userAccount.onchange = function() {
+                    var userAccountValue = userAccount.options[userAccount.selectedIndex].value;
+
+                    if (userAccountValue == 2) {
+                        location.href = "{{path('fos_user_security_logout')}}";
+                    }
+                    else if (userAccountValue == 1) {
+                        location.href = "{{path('loadUserReservations')}}?userId="+{{app.user.id}};
+                }
+                }
+
+        </script>
+    {% endif %}
+{% endblock %}
+
+
+

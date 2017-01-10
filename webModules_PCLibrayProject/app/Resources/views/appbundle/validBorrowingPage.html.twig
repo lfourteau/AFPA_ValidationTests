@@ -1,0 +1,12 @@
+    {% extends 'base.html.twig' %}
+
+{% block body %}
+    
+ {% include 'appbundle/globalNavBar.html.twig' %}
+ {% include 'appbundle/userNavBar.html.twig' %}
+
+<div class ="PleyberChristPagesContainer">
+    La réservation a bien été validée
+    <a href ="{{path('loadManagerPage')}}"<button>Retourner à la page des réservations</button></a>
+</div>
+ {% endblock %}

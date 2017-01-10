@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% include 'appbundle/globalNavBar.html.twig' %}
+{% include 'appbundle/userNavBar.html.twig' %}
+    
+<div class ="PleyberChristPagesContainer">    
+    {%if not isBooked %}
+        <p>
+        Votre ouvrage a bien été réservé. Vous pouvez venir le 
+        reccupérer quand vous le souhaitez pendant les horaires d'ouverture de votre médiathèque.
+        Pour rappel, vous disposez d'une semaine pour venir le réccupérer, autrement il sera remis en prêt.
+        </p>
+         <a href ="{{path('newDocuments')}}"><button>Continuer mes réservations</button></a>
+    {% else %}
+        <p>
+        Nous somme désolés, cette ouvrage est déja réservé.
+        </p>
+        <a href ="{{path('newDocuments')}}"><button>Retour aux réservations</button></a>
+    {% endif %}
+</div>    
+{% endblock %}

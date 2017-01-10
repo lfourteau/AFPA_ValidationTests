@@ -1,0 +1,278 @@
+/*Commun aux pages du site de PleyberChrist*/
+.PleyberChristPagesContainer {    
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: justify;
+    margin-top: 30px;
+}
+
+@media screen and (max-width:810px) {
+.PleyberChristPagesContainer {    
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    }
+}
+
+/*Page globalNavBar.html.twig*/
+#indexPageNavBarImage {
+    margin-top: -1.8em;
+    width: 100%;
+    height: auto;    
+}
+
+#myGolbalTopNav {
+    font-size: 13px;
+}
+
+  /* Remove margins and padding from the list, and add a black background color */
+.topGlobalnav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: rgb(237,238,239);
+}
+/* Float the list items side by side */
+.topGlobalnav li {
+    float: left;
+    margin-top : 0.7em;
+    margin-bottom: 0.7em;    
+}
+/* Style the links inside the list items */
+.topGlobalnav li a {
+    display: inline-block;
+    color: rgb(102,102,102);
+    text-align: center;
+    text-decoration: none;
+    transition: 0.3s;
+    /*font-size: 11px;*/
+    font-weight: bold;    
+    padding-right: 8px;
+    margin-left: 8px;
+    border-right : solid 3px rgb(255, 183,0);
+}
+/* Change background color of links on hover */
+.topGlobalnav li a:hover {color: rgb(255, 183,0);}
+/* Hide the list item that contains the link that should open and close the topGlobalnav on small screens */
+.topGlobalnav li.icon {display: none;}
+#underLine {
+    margin-top : -0.75em;
+    width: 50%;
+    border-top : solid 2px rgb(237,238,239);       
+}/* When the screen is less than 800 pixels wide, hide all list items, except for the first one ("Home"). Show the list item that contains the link to open and close the topGlobalnav (li.icon) */
+@media screen and (max-width:760px) {
+  .topGlobalnav li:not(:first-child) {display: none;}
+  .topGlobalnav li.icon {
+    float: right;
+    display: inline-block;
+  }
+  .topGlobalnav li.icon a {
+    border-right : solid 3px rgb(237,238,239)     
+  }
+}
+/* The "responsive" class is added to the topGlobalnav with JavaScript when the user clicks on the icon. This class makes the topGlobalnav look good on small screens */
+@media screen and (max-width:760px) {
+  .topGlobalnav.responsive {position: relative;}
+  .topGlobalnav.responsive li.icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topGlobalnav.responsive li {
+    float: none;
+    display: inline;    
+  }  
+  .topGlobalnav.responsive li a {
+    display: block;
+    text-align: left;
+    margin-top: 10px;
+    border-right : solid 3px rgb(237,238,239);
+  }
+}
+
+/*Page userNavBar.html.twig*/
+#mediaTitle {
+    margin-top: -10px;
+    font-size:25px;
+    font-weight: bold;
+    text-align: center;
+}
+#isConnected {
+    /*font-size: 11px;*/   
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;   
+}
+@media screen and (max-width:400px) {
+    #isConnected {
+        text-align: left;
+    }
+}
+.userNavBar {
+    margin-top: -10px;
+     background-color: rgb(194, 195, 195);
+     border-radius: 5px;
+}
+
+
+
+
+/*Page index.html.twig*/
+#IndexPageContent {
+    margin-top: 25px;
+}
+
+  /*NavBar Responsive  selon même modèle que pour la navbar globale*/
+.IndexNavbar {
+    list-style-type: none;
+  
+    overflow: hidden;
+    margin-top: -1em;
+}
+.IndexNavbar li {
+    float: left;
+    margin-left : 0.7em;
+    margin-right: 0.7em;
+    cursor: pointer;    
+}
+.IndexNavbar li a {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    transition: 0.3s;
+    /*font-size: 11px;*/
+    font-weight: bold;
+}
+
+#IndexNavBarLink {
+    color: blue;
+}
+.IndexNavbar li a:hover {color: rgb(255, 183,0);}
+.IndexNavbar li.icon {display: none;}
+#underLine {
+    margin-top : -0.75em;
+    width: 50%;
+    border-top : solid 2px rgb(237,238,239);       
+}
+@media screen and (max-width:790px) {
+  .IndexNavbar li {display: none;}  
+  .IndexNavbar li.icon {
+    float: right;
+    display: inline-block;
+  }  
+}
+@media screen and (max-width:790px) {
+  .IndexNavbar.responsive {position: relative;}
+  .IndexNavbar.responsive li.icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .IndexNavbar.responsive li {
+    float: none;
+    display: inline;    
+  }  
+  .IndexNavbar.responsive li a {
+    display: block;
+    text-align: left;
+    margin-top: 10px;
+    
+  }
+}
+.paragraphTitle {
+    font-weight: bold;    
+}
+libraryPresentationBlock {
+    display:block;
+    margin-top: 4em;
+}
+.libraryPresentationNone {
+    display: none;
+}
+.contactsHoursBlock {
+    display:block;     
+}
+.contactsHoursNone {
+    display:none;    
+}
+.localEventsBlock {
+    display: block;
+    margin-top: 4em;
+}
+.localEventsNone {
+    display: none;
+}
+.informations {
+    display: block;
+    margin-top: 4em;
+}
+.informationsNone {
+    display: none;
+}
+
+/*Page newsDocuments.html.twig*/
+#newDocumentsTopPage {
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 50px;
+}
+.newDocumentTitle {
+    text-align :center;
+    font-weight : bold;
+    font-size : 20px;
+}
+@media screen and (min-width:500px) {
+    .newDocumentsPageContainer {
+        display : flex;
+        flex-direction: row;
+        align-items : center;   
+    }
+}
+@media screen and (max-width:500px) {
+    .newDocumentsPageContainer {
+        
+    }
+}
+.newDocumentsPageItems:nth-child(2) {
+    margin-left : 3%;    
+}
+@media screen and (max-width:500px) {
+    .newDocumentsPageItems:nth-child(1) {
+        text-align: center;
+    }
+}
+.titlePage {
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+}
+.reserveDocument {
+    font-weight: bold;
+    color: red;
+}
+.freeDocument {
+    font-weight: bold;
+    color: green;
+}
+
+
+/*Page managerPage.html.twig*/
+
+.ReservationRow {
+    border-bottom: solid 2px black;
+    padding-bottom: 25px;
+}
+
+/*Page userReservation.html.twig*/
+.userReservationDiv {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+

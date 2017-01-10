@@ -1,0 +1,64 @@
+home:
+    path: /anonymous/home
+    defaults: 
+       _controller: AppBundle:Main:index
+
+newDocuments:
+    path: /anonymous/newDocuments
+    defaults:
+        _controller: AppBundle:Main:loadNewDocuments
+        
+localEvents:
+    path: /anonymous/localEvents
+    defaults:
+        _controller: AppBundle:Main:loadLocalEvents
+        
+ouvrageReservation:
+    path: /user/reservation
+    defaults:
+        _controller: AppBundle:Main:documentReservation
+        
+sendotherPages:
+    path: /otherPages
+    defaults: 
+        _controller: AppBundle:LoadOtherPages:sendOtherPages
+        
+getLocalEvents:
+    path:   /localEvents
+    defaults: 
+        _controller: AppBundle:Main:getLocalEvents
+        
+loadManagerPage:
+    path: /manager
+    defaults:   
+        _controller: AppBundle:Manager:loadManagerPage
+        
+currentReservations:
+    path: /manager/getReservations
+    defaults:
+        _controller: AppBundle:Manager:getReservations
+        
+validReservation:
+    path: /manager/validReservation
+    defaults:
+        _controller: AppBundle:Manager:validReservation
+        
+loadUserReservations:
+    path: /user
+    defaults:
+        _controller: AppBundle:User:loadUserReservations
+        
+delReservation:
+    path: /user/delReservation
+    defaults:
+        _controller: AppBundle:User:delReservations
+
+loadBorrowers:
+    path: /manager/loadBorrowers
+    defaults:
+        _controller: AppBundle:Manager:loadBorrowers       
+        
+delBorrowers:
+    path: /manager/delBorrowers
+    defaults:
+        _controller: AppBundle:Manager:delBorrowers

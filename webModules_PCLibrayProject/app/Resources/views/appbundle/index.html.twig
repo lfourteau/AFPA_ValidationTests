@@ -1,0 +1,246 @@
+{% extends 'base.html.twig' %}
+
+{% block body %} 
+{% include 'appbundle/globalNavBar.html.twig' %}
+{% include 'appbundle/userNavBar.html.twig' %}
+
+<div class ="PleyberChristPagesContainer">
+      
+    <div id = "IndexPageContent">
+        {% if not is_granted('ROLE_GESTIONNAIRE') %}
+        <ul id = "myIndexNavbar" class="IndexNavbar">
+            <li onclick = "showLibraryPresentationDiv()"><a>Présentation</a></li>
+            <li onclick = "showContactsHoursDiv()"><a>Horaires/contacts</a><li>
+            <li onclick = "getLocalEvents()" class ="localEvents"><a>Evènements</a></li>
+            <li onclick = "showInformationsDiv()"><a>Informations</a><li>
+            <li><a href ="{{path('newDocuments')}}" id = "IndexNavBarLink">Nouveautés</a></li>
+            <li class ="icon">
+                <a href ="javascript:void(0);" onclick="showIndexNavbar()"><i class="fa fa-bars" aria-hidden="true"></i>
+</a>
+            </li>
+        </ul>       
+        <div class ="libraryPresentationBlock" id ="libraryPresentation">
+            <h2>Présentation</h2>
+            <p>
+            Avec plus de 10000 ouvrages, la médiathèque met à votre disposition un outil culturel ouvert à tous qui permet de contribuer aux loisirs, 
+            à l’information, à l’éducation, à la formation et à la culture pour tous. La consultation sur place des livres et périodiques est libre et gratuite. 
+            </p>
+            <p>
+               La bibliothèque est constituée de différents espaces.
+            </p>
+            <p>
+               <span class ="paragraphTitle">Un espace adulte :</span><br> 
+               * 3000 romans (dont 200 gros caractères, 1900 policiers)<br>
+               * 210 ouvrages du fonds "vécu" (témoignages et biographies)<br>
+               * 1125 BD<br>
+               * Un fonds breton de 450 ouvrages (Ha levrioù e brezhoneg evit bugaled)<br>
+               * 1400 documentaires qui recouvrent tous les domaines encyclopédiques des connaissances<br>
+            </p>
+            <p>
+                <span class ="paragraphTitle">Un espace enfant :</span> 
+               * 820 albums
+               * 6 abonnements à des magazines
+               * 1050 romans
+               * 680 documentaires
+            </p>
+            <p>
+               <span class ="paragraphTitle">Un espace "périodiques" :</span>
+               * 9 abonnements à des magazines
+               * 3 abonnements à des quotidiens
+               * Espace de lecture (consultation sur place)
+            </p>
+            <p>
+               <span class ="paragraphTitle">Un espace cinéma de 380 DVD</span>
+
+            </p>
+            <p>
+               <span class ="paragraphTitle">Un espace musical de 760 CD</span>
+            </p>
+            <p>
+               <span class ="paragraphTitle">Un espace de recherche documentaire</span> grâce au catalogue numérique du fonds de la médiathèque, mis à disposition des lecteurs.
+            </p>
+            <p>
+                <span class ="paragraphTitle">Divers espaces de travail sur place.</span>
+            </p>
+        </div>
+        
+        <div id = "contactsHours" class ="contactsHoursNone">
+            <h2>Horaires et contact </h2>
+            <span class ="paragraphTitle">Horaires d’ouverture :</span> <br>
+            <p>
+                * Le mardi : de 10h00 à 12h00 et de 16h30 à 18h30<br>
+                * Le mercredi : de 10h00 à 12h00 et de 13h30 à 18h30<br>
+                * Le jeudi : réservé aux écoles et aux groupes<br>
+                * Le vendredi : de 16h30 à 18h30<br>
+                * Le samedi : de 10h00 à 12h00 et de 13h30 à 15h30<br>
+            </p>                
+            <p>
+                <span class ="paragraphTitle"> Contacts</span><br>
+            <p>
+                Tél : 02.98.78.49.27<br>
+                mail : mediatheque.pleyber@orange.fr
+            </p>
+            <p>
+                Adresse :<br>
+                Porz Ruz<br>
+                29410 Pleyber-Christ
+            </p>
+        </div>
+
+        <div id ="localEvents" class ="localEventsNone">
+            <h2>Evènements locaux</h2>
+            <table id = "EventsTable">
+                <tr>
+                    <th>Nom</th>
+                    <th>Description</th>
+                </tr>
+                
+            </table>
+    
+        </div>
+        
+        <div id ="informations" class ="informationsNone">
+            <h2>Informations</h2>
+            <p>
+                Pour recevoir les news de la médiathèque, (fermetures, animations...) être prévenu en temps réel de l'arrivée 
+                de votre réservation, envoyez nous votre adresse Mail à l'adresse suivante : mediatheque.pleyber@orange.fr
+            </p>
+            <p>
+                Vous ne trouvez pas chez nous le livre, DVD, CD que vous recherchez, consultez le catalogue de la bibliothèque 
+                du Finistère en cliquant sur le lien ci dessous et nous le réserverons : 
+            </p>
+            <p>
+                <a href = "http://biblio-finistere.cg29.fr/medias/medias.aspx?INSTANCE=EXPLOITATION">Bibliothèque du Finistère</a>
+            </p>
+            <p>
+                <a href = "{{path('home')}}">Portail de la Médiathèque
+            </p>
+        </div>
+    {% endif %}
+    {% if is_granted ('ROLE_GESTIONNAIRE') %}
+        <h2>Mode gestionnaire activé!</h2>
+        <a href ="{{path('loadManagerPage')}}"><button>Accéder à la page gestionnaire</button></a>
+    {% endif %}
+        
+        
+    </div>
+</div>
+        
+{% block javascript %}
+    <script>
+        function showLibraryPresentationDiv() {
+            var LP = document.getElementById("libraryPresentation");
+            var CH = document.getElementById("contactsHours");
+            var LE = document.getElementById("localEvents");
+            var IN = document.getElementById("informations");
+            var x = document.getElementById("myIndexNavbar");
+            
+            if (LP.className === "libraryPresentationNone") {                
+                LP.className = "libraryPresentationBlock";
+                CH.className = "contactsHoursNone";
+                LE.className = "localEventsNone";
+                IN.className = "informationsNone";
+                x.className = "IndexNavbar";
+            }            
+        }
+        
+        function showContactsHoursDiv() {
+            var LB = document.getElementById("libraryPresentation");
+            var CH = document.getElementById("contactsHours");
+            var LE = document.getElementById("localEvents");
+            var IN = document.getElementById("informations");
+            var x = document.getElementById("myIndexNavbar");
+            
+            if ((LB.className === "libraryPresentationBlock") || (LE.className === "localEventsBlock") || (IN.className === "informationsBlock")){
+                LB.className = "libraryPresentationNone";
+                LE.className = "localEventsNone";
+                IN.className = "informationsNone";
+            }           
+            CH.className = "contactsHoursBlock"; 
+            x.className = "IndexNavbar";
+        }
+        
+         function showInformationsDiv() {
+            var LB = document.getElementById("libraryPresentation");
+            var CH = document.getElementById("contactsHours");
+            var LE = document.getElementById("localEvents");
+            var IN = document.getElementById("informations");
+            var x = document.getElementById("myIndexNavbar");
+            
+            if ((LB.className === "libraryPresentationBlock") || (CH.className === "contactsHoursBlock") || (LE.className === "localEventsBlock")) {
+                LB.className = "libraryPresentationNone";
+                CH.className = "contactsHoursNone";
+                LE.className = "localEventsNone";
+            }           
+            IN.className = "informationsBlock";     
+            x.className = "IndexNavbar";
+        }
+        
+        /* Toggle between adding and removing the "responsive" class to topIndexnav when the user clicks on the icon */
+        function showIndexNavbar() {
+            var x = document.getElementById("myIndexNavbar");
+            if (x.className === "IndexNavbar") {
+                x.className += " responsive";
+            } else {
+                x.className = "IndexNavbar";
+            }
+        }
+        
+        //Chargement des évènements en AJAX
+        function getLocalEvents() {
+            //Affiche la page Evènements
+            var LB = document.getElementById("libraryPresentation");
+            var CH = document.getElementById("contactsHours");
+            var LE = document.getElementById("localEvents");
+            var IN = document.getElementById("informations");
+            var x = document.getElementById("myIndexNavbar");
+            if ((LB.className === "libraryPresentationBlock") || (CH.className === "contactsHoursBlock") || (IN.className === "informationsBlock")){
+                LB.className = "libraryPresentationNone";
+                CH.className = "contactsHoursNone";
+                IN.className = "informationsNone";
+            }           
+            LE.className = "localEventsBlock"; 
+            x.className = "IndexNavbar";
+            
+            //Lance la requête AJAX
+            var xhr = new XMLHttpRequest();                                                                                             
+            xhr.onreadystatechange = function () {                                                                   //Vérifie si la requête s'est bien passée
+                if (this.readyState === 4) {
+                    if (this.status === 200) {
+                    var localEvents = JSON.parse(this.responseText);                                           //Parse le résultat de la requête ce qui permet de le lire
+                        
+                           document.getElementById('EventsTable').innerHTML = null;                //Remet la valeur de la table qui affiche les évènements à null (pour éviter que la ligne soit recréée à chaque fois à la suite)
+                           for (var i=0; i<localEvents.length; i++) {                                                //Parcourt le resultat de la requête pour afficher les données 
+                               var localEventTitle = localEvents[i].eventName;                                 //Réccupère le nom de l'évènement
+                               var localEventDescription = localEvents[i].eventDescription;             //Réccupère la description
+                                
+                               var newTr = document.createElement('tr');                                         //Crée une balise tr
+                               newTr.class = "EventRow";
+                               
+                               var newNameTd = document.createElement('td');                              //Crée une balise td contenant le nom de l'évènement
+                               newNameTd.id = "eventName"+i;
+                               newNameTd.innerHTML = localEventTitle;                                                              
+                               
+                               var newDescriptionTd = document.createElement('td');                     //Crée une balise td contenant la description de l'évènement 
+                               newDescriptionTd.id = "eventDescription"+i;
+                               newDescriptionTd.innerHTML = localEventDescription;
+                               
+                               
+                               newTr.appendChild(newNameTd);                                                        //Raccroche le premier td à tr                               
+                               newTr.appendChild(newDescriptionTd);                                               //Raccroche le deuxième td à tr                              
+                               
+                               document.getElementById('EventsTable').appendChild(newTr);       //Raccroche le tr à la table dont l'id est "EventsTable"                                                 
+                           }                        
+                       }                       
+                    } else {
+                        console.log(xhr.statusText);                                                                            //Si problème lors de la requête, renvoie la valeur de l'érreur
+                    }                
+            };
+            xhr.open("GET", "{{path('getLocalEvents')}}");                                                      //Chemin à utiliser pour lancer la requête AJAX
+            xhr.send();                                                                                                                     //Envoie de la requête
+        }       
+    </script>
+{% endblock %}
+    
+{% endblock %}
+

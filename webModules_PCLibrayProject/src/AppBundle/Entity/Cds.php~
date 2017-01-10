@@ -1,0 +1,110 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Cds
+ *
+ * @ORM\Table(name="CDs", indexes={@ORM\Index(name="publication_id", columns={"publication_id"})})
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CdsRepository")
+ */
+class Cds
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="duration", type="integer", nullable=false)
+     */
+    private $duration;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \AppBundle\Entity\Documents
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Documents")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="publication_id", referencedColumnName="id")
+     * })
+     */
+    private $publication;
+    
+    /**
+     * @var \AppBundle\Entity\Documents
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Documents")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="document_id", referencedColumnName="id")
+     * })
+     */
+    private $document;
+
+
+
+    /**
+     * Set duration
+     *
+     * @param integer $duration
+     *
+     * @return Cds
+     */
+    public function setDuration($duration)
+    {
+        $this->duration = $duration;
+
+        return $this;
+    }
+
+    /**
+     * Get duration
+     *
+     * @return integer
+     */
+    public function getDuration()
+    {
+        return $this->duration;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set publication
+     *
+     * @param \AppBundle\Entity\Documents $publication
+     *
+     * @return Cds
+     */
+    public function setPublication(\AppBundle\Entity\Documents $publication = null)
+    {
+        $this->publication = $publication;
+
+        return $this;
+    }
+
+    /**
+     * Get publication
+     *
+     * @return \AppBundle\Entity\Documents
+     */
+    public function getPublication()
+    {
+        return $this->publication;
+    }
+}

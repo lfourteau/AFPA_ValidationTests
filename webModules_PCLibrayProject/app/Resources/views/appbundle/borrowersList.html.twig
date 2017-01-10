@@ -1,0 +1,9 @@
+{% if borrowers %}
+    <h2>Liste des emprunts en cours</h2>
+    {% for borrower in borrowers %}
+        <p class ="paragraphTitle">{{borrower.document.title}}</p>
+        <p>id de l'emprunpt : {{borrower.id}}</p>
+        <p>id du document : {{borrower.document.id}}</p>
+        <a href="/manager/delBorrowers?documentId={{borrower.document.id}}"><button>Retour d'emprunt</button></a>
+    {% endfor %}
+{% endif %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% include 'appbundle/globalNavBar.html.twig' %}
+{% include 'appbundle/userNavBar.html.twig' %}
+    
+<div class ="PleyberChristPagesContainer">
+    <p>Le retour d'emprunt a bien été validé</p>
+    <a href ="{{path('loadManagerPage')}}"><button>Revenir à la page d'acceuil gestionnaire</button></a>
+</div>
+{% endblock %}

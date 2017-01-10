@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% include 'appbundle/globalNavBar.html.twig' %}
+{% include 'appbundle/userNavBar.html.twig' %}
+    
+<div class ="PleyberChristPagesContainer">    
+   
+    {% for userReservation in userReservations %}
+    <p class ="newDocumentTitle">{{userReservation.document.title}}</p>
+    <div class ="userReservationDiv">
+        <img class = "newDocumentsPageImage" src  = "{{asset('Images/BDDImages/' ~userReservation.document.picture)}}"> 
+        <a href ="/user/delReservation?documentId={{userReservation.document.id}}"><button> Annuler ma réservation</button></a>
+    {% endfor %}
+        <a href ="{{path('newDocuments')}}"><button>Revenir aux nouveautés</button></a>
+    </div>
+    
+</div>
+{% endblock %}

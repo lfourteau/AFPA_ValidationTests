@@ -1,0 +1,35 @@
+{#     NavBar commune à toutes les pages du ste!!!!     #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class ="PleyberChristPagesContainer">
+        <img id = "indexPageNavBarImage"  src = "{{asset('Images/navBarImage.jpg')}}">
+        <ul id = "myGolbalTopNav" class="topGlobalnav">
+            <li><a href ="{{path('sendotherPages')}}?pageValue=1">Cadre de vie</a></li>
+            <li><a href ="{{path('sendotherPages')}}?pageValue=2">Vie municipale</a></li>
+            <li><a href ="{{path('sendotherPages')}}?pageValue=3">Vie locale et sociale</a></li>
+            <li><a href ="{{path('sendotherPages')}}?pageValue=4">Vie associative et culturelle</a></li>
+            <li><a href ="{{path('sendotherPages')}}?pageValue=5">Liens</a></li>
+            <li><a href ="{{path('sendotherPages')}}?pageValue=6">Economie</a></li>
+            <li class ="icon">
+                <a href ="javascript:void(0);" onclick="showResponsiveGlobalNav()">&#9776;</a>
+            </li>
+        </ul>
+        <div id="underLine"></div>
+    </div>
+
+{% block javascript %}
+    <script>
+        /* Toggle between adding and removing the "responsive" class to topIndexnav when the user clicks on the icon */
+        function showResponsiveGlobalNav() {
+            var x = document.getElementById("myGolbalTopNav");
+            if (x.className === "topGlobalnav") {
+                x.className += " responsive";
+            } else {
+                x.className = "topGlobalnav";
+            }
+        }
+    </script>
+{% endblock %}
+{% endblock %}
