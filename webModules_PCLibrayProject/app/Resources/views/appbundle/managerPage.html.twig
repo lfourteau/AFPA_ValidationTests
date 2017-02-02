@@ -1,104 +1,153 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-{% include 'appbundle/globalNavBar.html.twig' %}
-{% include 'appbundle/userNavBar.html.twig' %}
-    
-<div class ="PleyberChristPagesContainer">          
-        
-        <a onclick = "showCurrentReservation()"> <button>Accéder aux reservations en cours</button></a>
-        <a onclick = "showCurrentBorrowers()"><button>Accéder aux emprunts en cours</button></a>
-        
-        <div id ="currentReservationDiv">        
-        </div>
-        
-        <div id ="currentBorrowersDiv">
-        </div>
-       
-{% block javascript %}
-    <script>
-        //Chargement des emprunts en AJAX avec html
-        function showCurrentBorrowers() {
-            var xhr = new XMLHttpRequest(); //connexion à AJAX
-        xhr.open("GET", " /manager/loadBorrowers", true); //on ouvre la connexion en GET sur le lien api_evenements
-        xhr.onload = function (e) { //Quand la co est établie l'évènement se lance.
-            if (xhr.readyState === 4) { //Bonne connexion
-                if (xhr.status === 200) { //La connexion s'est bien passée.
-                    console.log(xhr.responseText);
-                    document.getElementById("currentBorrowersDiv").innerHTML = xhr.responseText;
-                    
-                } else {
-                    console.error(xhr.statusText);
+    {% include 'appbundle/globalNavBar.html.twig' %}
+    {% include 'appbundle/userNavBar.html.twig' %}
+
+    <div class ="PleyberChristPagesContainer">          
+
+        <button id ="loadCurrentReservations">Accéder aux reservations en cours</button>
+        <button id ="loadLocalEvents">Accéder aux emprunts en cours</button>
+
+        <div id ="currentReservationDiv"></div>
+        <div id ="currentBorrowersDiv"></div>
+        <div id ="errorMessage"></div>
+
+        {% block javascript %}
+            <script>
+                //Chargement des emprunts en AJAX avec HTML et JQuery
+                $("#loadLocalEvents").on('click', function () {
+                    //Instanciation de l'objet XHR en un ligne !!    
+                    $.ajax({
+                        url: '{{path('loadBorrowers')}}',
+                        //Type de la requête HTTP
+                        type: 'GET',
+                        //Variable à faire passer
+                        //data : "emprunts =" + all,
+                        //Type de données à recevoir
+                        dataType: 'html',
+                        //Code_html = code HTML renvoyé suite à la requête
+                        success: function (code_html, status) {
+                            $('#currentBorrowersDiv').html(code_html);
+                        },
+                        //Affiche un code d'erreur selon la réponse du serveur
+                        error: function (resultat, status, erreur) {
+                            $('#errorMessage').html(erreur);
+                        },
+                        complete: function (resultat, statut) {
+                        }
+                    });
+                });
+
+                //Chargement des emprunts en utilisant le raccourcis $.get
+                $("#loadLocalEvents").on('click', function () {
+                    $.get(
+                            '{{path('loadBorrowers')}}',
+                            function showBorrowers(texte_recu) {
+                                $('#currentBorrowersDiv').html(texte_recu);
+                            });
+                });
+
+
+                //Chargement des emprunts en AJAX avec html
+                function showCurrentBorrowers() {
+                    var xhr = new XMLHttpRequest();                                                   //Connexion à AJAX
+                    xhr.open("GET", "{{path('loadBorrowers')}}", true);                      //On ouvre la connexion en GET sur le lien api_evenements
+                    xhr.onload = function (e) {                                                             //Quand la co est établie l'évènement se lance.
+                        if (xhr.readyState === 4) {                                                       //Bonne connexion
+                            if (xhr.status === 200) {                                                       //La connexion s'est bien passée.
+                                console.log(xhr.responseText);
+                                document.getElementById("currentBorrowersDiv").innerHTML = xhr.responseText;
+                            } else {
+                                console.error(xhr.statusText);
+                            }
+                        }
+                    };
+                    xhr.onerror = function (e) {
+                        console.error(xhr.statusText);
+                    };
+                    xhr.send(null);
                 }
-            }
-        };
-        xhr.onerror = function (e) {
-            console.error(xhr.statusText);
-        };
-        xhr.send(null);
-        }
-        
-        //Chargement des réservations en AJAX avec JSON
-        function showCurrentReservation() {
-             var xhr = new XMLHttpRequest();
-             
-             xhr.onreadystatechange = function () {                                                                   
-                if (this.readyState === 4) {
-                    if (this.status === 200) {
-{#                        console.log(this.responseText);#}
-                    var reservations = JSON.parse(this.responseText);                                           
-                           
-                           document.getElementById('currentReservationDiv').innerHTML = null;                
-                           for (var i=0; i<reservations.length; i++) {                                                
-                               var currentReservationId = reservations[i].id;                                 
-                               var currentReservationDocumentId = reservations[i].document.id;                          
-                               var currentReservationDocumentTitle = reservations[i].document.title; 
-                               
-                               //Création des éléments nécessaires pour le constituer le HTML
-                               var newH2 = document.createElement('h2');
-                               newH2.innerHTML = "Liste des Réservations en cours";
-                                
-                               var newDiv = document.createElement('div');                                         
-                               newDiv.classList = "ReservationRow";
-                               
-                               var newReservationId = document.createElement('p');                              
-                               newReservationId.classList = "ReservationId";
-                               newReservationId.innerHTML = "id de la réservation :" + currentReservationId;                                                              
-                               
-                               var newReservationDocumentId = document.createElement('p');                     
-                               newReservationDocumentId.classList = "ReservationDocumentId";
-                               newReservationDocumentId.innerHTML = "id du document :" + currentReservationDocumentId;
-                               
-                               var newReservationDocumentTitle = document.createElement('h3');                     
-                               newReservationDocumentTitle.classList = "ReservationDocumentTitle";
-                               newReservationDocumentTitle.innerHTML = currentReservationDocumentTitle;
-                               
-                               var validReservPath = document.createElement('a');
-                               validReservPath.href = "{{path('validReservation')}}?user_id=" + reservations[i].user.id + "&document_id=" + reservations[i].document.id ;
-                               
-                               var validReservButton = document.createElement('button');
-                               validReservButton.innerHTML = "Valider la réservation";
-                                                              
-                                newDiv.appendChild(newReservationDocumentTitle);
-                                newDiv.appendChild(newReservationId);                                                                          
-                                newDiv.appendChild(newReservationDocumentId);                                              
-                                
-                                validReservPath.appendChild(validReservButton);
-                                newDiv.appendChild(validReservPath);
-                                
-                               document.getElementById('currentReservationDiv').appendChild(newH2);                                      
-                               document.getElementById('currentReservationDiv').appendChild(newDiv);                                                     
-                           }                        
-                       }                       
-                    } else {
-                        console.log(xhr.statusText);                                                                           
-                    }                
-            };
-            xhr.open("GET", "{{path('currentReservations')}}");                                                     
-            xhr.send();                                                                                                                    
-        }
-        
-    </script>
-{% endblock %}
-{% endblock %}               
+
+
+
+                //Chargement des réservations en AJAX avec JSON
+                function showCurrentReservation() {
+                    var xhr = new XMLHttpRequest();
+
+                    xhr.onreadystatechange = function () {
+                        if (this.readyState === 4) {
+                            if (this.status === 200) {
+                                console.log(this.responseText);
+                                var reservations = JSON.parse(this.responseText);
+
+                                document.getElementById('currentReservationDiv').innerHTML = null;
+                                for (var i = 0; i < reservations.length; i++) {
+                                    var currentReservationId = reservations[i].id;
+                                    var currentReservationDocumentId = reservations[i].document.id;
+                                    var currentReservationDocumentTitle = reservations[i].document.title;
+
+                                    //Création des éléments nécessaires pour le constituer le HTML
+                                    var newH2 = document.createElement('h2');
+                                    newH2.innerHTML = "Liste des Réservations en cours";
+
+                                    var newDiv = document.createElement('div');
+                                    newDiv.classList = "ReservationRow";
+
+                                    var newReservationId = document.createElement('p');
+                                    newReservationId.classList = "ReservationId";
+                                    newReservationId.innerHTML = "id de la réservation :" + currentReservationId;
+
+                                    var newReservationDocumentId = document.createElement('p');
+                                    newReservationDocumentId.classList = "ReservationDocumentId";
+                                    newReservationDocumentId.innerHTML = "id du document :" + currentReservationDocumentId;
+
+                                    var newReservationDocumentTitle = document.createElement('h3');
+                                    newReservationDocumentTitle.classList = "ReservationDocumentTitle";
+                                    newReservationDocumentTitle.innerHTML = currentReservationDocumentTitle;
+
+                                    var validReservPath = document.createElement('a');
+                                    validReservPath.href = "{{path('validReservation')}}?user_id=" + reservations[i].user.id + "&document_id=" + reservations[i].document.id;
+
+                                    var validReservButton = document.createElement('button');
+                                    validReservButton.innerHTML = "Valider la réservation";
+
+                                    newDiv.appendChild(newReservationDocumentTitle);
+                                    newDiv.appendChild(newReservationId);
+                                    newDiv.appendChild(newReservationDocumentId);
+
+                                    validReservPath.appendChild(validReservButton);
+                                    newDiv.appendChild(validReservPath);
+
+                                    document.getElementById('currentReservationDiv').appendChild(newH2);
+                                    document.getElementById('currentReservationDiv').appendChild(newDiv);
+                                }
+                            }
+                        } else {
+                            console.log(xhr.statusText);
+                        }
+                    };
+                    xhr.open("GET", "{{path('currentReservations')}}");
+                    xhr.send();
+                }
+
+                //Chargement des réservatons en AJAX/JSON avec Jquery
+                $('#loadCurrentReservations').on('click', function () {
+                    $.getJSON("{{path('currentReservations')}}", function (data) {
+                        //Titre de la page
+                        $('#currentReservationDiv').html('<h2>Liste des réservations en cours</h2>');
+                        //Boucle permettant de générer tous les éléments nécessaires à l'affiche d'une reservation
+                        for (var i = 0; i < data.length; i++) {
+                            $('#currentReservationDiv').append('<p><b>Titre : </b>' + data[i].document.title + '</p>');
+                            $('#currentReservationDiv').append('<p><b>Nom de la personne : </b>' + data[i].user.username + '</p>');
+                            $('#currentReservationDiv').append('<p><b>id de la réservation : </b>' + data[i].id + '</p>');
+                            $('#currentReservationDiv').append('<p><b>id du document : </b>' + data[i].document.id + '</p>');
+                            $('#currentReservationDiv').append('<a href = ' + '{{path('validReservation')}}?user_id=' + data[i].user.id + '&document_id=' + data[i].document.id + ';><button>Valider l\'emprunt</button></a>');
+                        }
+                    });
+                });
+
+            </script>
+        {% endblock %}
+    {% endblock %}               
 

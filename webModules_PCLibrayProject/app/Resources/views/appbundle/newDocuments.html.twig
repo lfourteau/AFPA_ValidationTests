@@ -11,8 +11,9 @@
         <select id ="arrivingSince">
             <option value ="1" {% if durationValue == 1 %}selected{% endif %}> Depuis hier</option>
             <option value ="15" {% if durationValue == 15 %}selected{% endif %}> Dans les 15 derniers jours</option>
-            <option value ="45" {% if durationValue == 30 %}selected{% endif %}> Dans les 30 derniers jours</option>
-            <option value ="45" {% if durationValue == 45 %}selected{% endif %}> Dans les 45 jours </option>
+            <option value ="30" {% if durationValue == 30 %}selected{% endif %}> Dans les 30 derniers jours</option>
+{#            Modification nécéssaire pour arriver à plus de 30 jours et non pas en notant 12452 jours#}
+            <option value ="12452" {% if durationValue == 12452 %}selected{% endif %}> Plus de 30 jours </option>
         </select>
     </span>
     <span>       

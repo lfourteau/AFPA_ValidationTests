@@ -31,7 +31,7 @@ class MainController extends Controller
         //Si "durationValue" n'est pas définit => Renvoie tous les documents avec une valeur de "durationValue fixée à 45)
          if (!$typeId) {
              if (!$durationValue) {                
-            $durationValue = 45;            
+            $durationValue = 12545;             //A modifier pour couvrir lus de 45 jours (modification nécéssaire dans toutes les requêtes
             }
             $newBooks = $em->getRepository('AppBundle:Books')->findAllNewBooks($durationValue);
             $newCDs = $em->getRepository('AppBundle:Cds')->findAllNewCDs($durationValue);
