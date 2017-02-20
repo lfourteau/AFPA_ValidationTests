@@ -15,6 +15,26 @@
 
         {% block javascript %}
             <script>
+
+                //Chargement des emprunts en AJAX avec html
+                function showCurrentBorrowers() {
+                    var xhr = new XMLHttpRequest();                                                   //Connexion à AJAX
+                    xhr.open("GET", "{{path('loadBorrowers')}}", true);                      //On ouvre la connexion en GET sur le lien api_evenements
+                    xhr.onload = function (e) {                                                             //Quand la co est établie l'évènement se lance.
+                        if (xhr.readyState === 4) {                                                       //Bonne connexion
+                            if (xhr.status === 200) {                                                       //La connexion s'est bien passée.
+                                console.log(xhr.responseText);
+                                document.getElementById("currentBorrowersDiv").innerHTML = xhr.responseText;
+                            } else {
+                                console.error(xhr.statusText);
+                            }
+                        }
+                    xhr.onerror = function (e) {
+                        console.error(xhr.statusText);
+                    };
+                    xhr.send(null);
+                }
+                
                 //Chargement des emprunts en AJAX avec HTML et JQuery
                 $("#loadLocalEvents").on('click', function () {
                     //Instanciation de l'objet XHR en un ligne !!    
@@ -49,28 +69,6 @@
                 });
 
 
-                //Chargement des emprunts en AJAX avec html
-                function showCurrentBorrowers() {
-                    var xhr = new XMLHttpRequest();                                                   //Connexion à AJAX
-                    xhr.open("GET", "{{path('loadBorrowers')}}", true);                      //On ouvre la connexion en GET sur le lien api_evenements
-                    xhr.onload = function (e) {                                                             //Quand la co est établie l'évènement se lance.
-                        if (xhr.readyState === 4) {                                                       //Bonne connexion
-                            if (xhr.status === 200) {                                                       //La connexion s'est bien passée.
-                                console.log(xhr.responseText);
-                                document.getElementById("currentBorrowersDiv").innerHTML = xhr.responseText;
-                            } else {
-                                console.error(xhr.statusText);
-                            }
-                        }
-                    };
-                    xhr.onerror = function (e) {
-                        console.error(xhr.statusText);
-                    };
-                    xhr.send(null);
-                }
-
-
-
                 //Chargement des réservations en AJAX avec JSON
                 function showCurrentReservation() {
                     var xhr = new XMLHttpRequest();
@@ -78,7 +76,7 @@
                     xhr.onreadystatechange = function () {
                         if (this.readyState === 4) {
                             if (this.status === 200) {
-                                console.log(this.responseText);
+                                
                                 var reservations = JSON.parse(this.responseText);
 
                                 document.getElementById('currentReservationDiv').innerHTML = null;
@@ -131,7 +129,7 @@
                     xhr.send();
                 }
 
-                //Chargement des réservatons en AJAX/JSON avec Jquery
+                //Chargement des réservatons en AJAX/JSON avec JQuery
                 $('#loadCurrentReservations').on('click', function () {
                     $.getJSON("{{path('currentReservations')}}", function (data) {
                         //Titre de la page

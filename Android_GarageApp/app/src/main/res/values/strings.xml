@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">GarageApp</string>
+    <string name="action_settings">Settings</string>
+    <string name="secondActivityName">test</string>
+    <string name="editTextComment">Veuillez entrer votre commentaire</string>
+    <string name="editTextSearchCity">Ville recherchée</string>
+</resources>
