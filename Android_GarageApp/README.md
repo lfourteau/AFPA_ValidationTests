@@ -1,24 +1,23 @@
-***MediaValidationTest***
+***GarageApp***
 ===================
-Projet de validation des modules Web au cours de la formation AFPA "dévellopeur Logiciel" à Morlaix
+Projet de validation du module Android au cours de la formation AFPA "dévellopeur Logiciel" à Morlaix
 
 # Languages utilisés :
-* HTML/CSS
-* Javascript (AJAX, manipulation du DOM)
-* PHP/Symfony 3 (Twig, Doctrine)
+* Java
+* PHP
 * Mysql
 
 #Installation
 ## Pré-requis : 
 * SGBD
-* Serveur local (ex: apache 2)
+* Apache 2 ou équivalent
+* Android studio ou équivalent associé à un emulateur
 
 ## A faire
-* Importer la base de données MediaValidationTest.sql
-* Modifier les paramètres de connexion de connexion à la bdd dans le fichier app/config/parameters.yml
-* Installer les dépendances en ligne de commande depuis le dossier du projet:
-curl -s https://getcomposer.org/installer | php
-php composer.phar install
-* Lancer le serveur local avec la commande : php bin/console server:start
+* Importer la base de données GarageApp.sql
+* Modifier les paramètres de connexion à la bdd dans le fichier app/javacom.example.afpa.garageapp/database/ConnectDB
+* Lancer le serveur avec la commande "composer start" depuis le dossier garageApp_SLIM
+* Modifier l'adresse IP des URL présentes dans les classes du dossier database de l'application (cf chemin ConnectDB)
+* Lancer l'application
 
 
