@@ -21,4 +21,8 @@ curl -s https://getcomposer.org/installer | php
 php composer.phar install
 * Lancer le serveur local avec la commande : php bin/console server:start
 
+## Identifiants de connection
+* utilisateur (userTest/usertest)
+* gestionnaire (gestUser/gestuser)
+
 
