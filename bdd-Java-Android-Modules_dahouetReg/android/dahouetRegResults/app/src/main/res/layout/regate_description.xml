@@ -32,7 +32,7 @@
         android:layout_marginBottom="25dp" />
 
     <Button
-        android:text="Accèder aux resultats"
+        android:text="Accéder aux résultats"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/getResultsBtn" />
