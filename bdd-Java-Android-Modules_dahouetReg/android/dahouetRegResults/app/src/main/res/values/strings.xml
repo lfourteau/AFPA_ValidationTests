@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">dahouetRegResults</string>
+    <string name="selectionner_regate">Selectionnez votre Régate</string>
+    <string name="regate_names"></string>
+
+
+</resources>
