@@ -1,6 +1,6 @@
 ***GarageApp***
 ===================
-Projet de validation du module Android au cours de la formation AFPA "dévellopeur Logiciel" à Morlaix
+Projet de validation du module Android au cours de la formation AFPA "développeur Logiciel" à Morlaix
 
 # Languages utilisés :
 * Java
